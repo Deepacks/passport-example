@@ -13,7 +13,7 @@ router.post(
   isUser,
   passport.authenticate("local", {
     failureRedirect: "/login",
-    successRedirect: "/secrets",
+    successRedirect: "/bookmarks",
   })
 );
 
@@ -52,7 +52,14 @@ router.get("/logout", (req, res) => {
   res.redirect("/");
 });
 
-router.get("/secrets", isAuth, (req, res) => {
+router.get("/bookmarks", isAuth, (req, res) => {
+  var cuki = req.session.cookie;
+  cuki = {
+    cocaina: true,
+  };
+  req.session.cookie = cuki;
+  console.log(req.session);
+
   const user = req.session.passport.user;
   res.render("secrets", { name: user.name, id: user.id });
 });
